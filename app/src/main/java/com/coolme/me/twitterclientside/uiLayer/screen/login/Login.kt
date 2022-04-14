@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.coolme.me.twitterclientside.dataLayer.model.Screen
@@ -28,6 +29,7 @@ fun Login(navController: NavController)
 {
     val keyboardController = LocalSoftwareKeyboardController.current
     Login(
+        keyboardController = keyboardController,
         navController = navController,
         scaffoldState = rememberScaffoldState(),
         onRegistration = {
@@ -38,9 +40,11 @@ fun Login(navController: NavController)
          )
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun Login(
+    keyboardController: SoftwareKeyboardController?,
     vM: LoginVM = hiltViewModel(),
     navController: NavController,
     scaffoldState: ScaffoldState,
@@ -84,7 +88,10 @@ fun Login(
                 {
                     UsernameForLogin(vM = vM)
                     PasswordForLogin(vM= vM, onSend = {})
-                    LoginButton(onClick = {vM.login(scaffoldState, navController) })
+                    LoginButton(onClick = {
+                        keyboardController?.hide()
+                        vM.login(scaffoldState, navController)
+                    })
                     RegistrationButton(onClick = onRegistration)
                 }
 

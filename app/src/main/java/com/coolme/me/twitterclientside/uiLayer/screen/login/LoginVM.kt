@@ -66,8 +66,10 @@ class LoginVM @Inject constructor(
                                 {
                                     onProgressing(false)
                                     println("Success")
-                                    navController.backQueue.clear()
-                                    navController.navigate(Screen.Wall.route)
+                                    //navController.backQueue.clear()
+                                    navController.navigate(Screen.Wall.route){
+                                        popUpTo(Screen.Login.route){ inclusive = true }
+                                    }
                                 }
                                 is ResultSho.Failure     ->
                                 {
