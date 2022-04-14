@@ -1,0 +1,55 @@
+package com.coolme.me.twitterclientside
+
+import androidx.compose.foundation.focusable
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.coolme.me.twitterclientside.dataLayer.model.Screen
+import com.coolme.me.twitterclientside.uiLayer.screen.article.Article
+import com.coolme.me.twitterclientside.uiLayer.screen.forgetPassword.ForgetPassword
+import com.coolme.me.twitterclientside.uiLayer.screen.home.Home
+import com.coolme.me.twitterclientside.uiLayer.screen.login.Login
+import com.coolme.me.twitterclientside.uiLayer.screen.registration.Registration
+import com.coolme.me.twitterclientside.uiLayer.screen.resetPassword.ResetPassword
+import com.coolme.me.twitterclientside.uiLayer.screen.wall.Wall
+
+@Composable
+fun NavHostSho(vM: NavHostShoVM = hiltViewModel())
+{
+    val navController = rememberNavController()
+    val focusRequester by remember { mutableStateOf(FocusRequester()) }
+
+    NavHost(
+        navController = navController,
+        startDestination = vM.startDestination,
+        modifier = Modifier
+                .focusRequester(focusRequester)
+                .focusable()
+                .pointerInput(Unit) {
+                    detectTapGestures(
+                        onTap = { focusRequester.requestFocus() }
+                                     )
+                }
+                .fillMaxSize()
+           )
+    {
+        composable(route= Screen.Login.route) { Login(navController = navController) }
+        composable(route= Screen.Registration.route) { Registration(navController = navController) }
+        composable(route= Screen.Wall.route) { Wall(navController = navController) }
+        composable(route= Screen.ForgetPassword.route) { ForgetPassword(navController = navController) }
+        composable(route= Screen.ResetPassword.route) { ResetPassword(navController = navController) }
+        composable(route= Screen.Home.route) { Home(navController = navController) }
+        composable(route= Screen.Article.route) { Article(navController = navController) }
+    }
+}
