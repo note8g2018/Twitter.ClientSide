@@ -8,7 +8,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.coolme.me.twitterclientside.uiLayer.theme.SnackBarContentText
+import com.coolme.me.twitterclientside.uiLayer.theme.StyleSnackBarContentText
 import com.coolme.me.twitterclientside.uiLayer.theme.StyleOutlinedButton
 
 @Composable
@@ -36,7 +36,7 @@ fun SnackBarContent(
 {
     Text(
         text = snackbarData.message,
-        style = SnackBarContentText,
+        style = StyleSnackBarContentText,
         )
 }
 

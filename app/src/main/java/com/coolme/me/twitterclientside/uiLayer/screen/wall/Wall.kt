@@ -6,7 +6,6 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
-import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -20,7 +19,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.navigation.NavController
 import com.coolme.me.twitterclientside.uiLayer.component.SnackbarHostSho
 import com.coolme.me.twitterclientside.uiLayer.modifierExtention.shadowWithColor
-import com.coolme.me.twitterclientside.uiLayer.screen.logout.Logout
 import com.coolme.me.twitterclientside.uiLayer.theme.*
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -67,13 +65,7 @@ fun Wall(
                     verticalArrangement = Arrangement.spacedBy(space = SpaceColumnHeight),
                       )
                 {
-                    Text(
-                        text = "Wall",
-                        )
-                    Logout(
-                        navController = navController,
-                        scaffoldState = scaffoldState,
-                          )
+
                 }
             }
         }

@@ -2,7 +2,7 @@ package com.coolme.me.twitterclientside.uiLayer.screen.logout
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Icon
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
@@ -24,15 +24,13 @@ fun Logout(
     scaffoldState: ScaffoldState,
           )
 {
-
-    Box(
-        modifier = Modifier.fillMaxSize()
-       )
+    Box()
     {
         TextButton(
             onClick = { vM.logout(scaffoldState, navController) },
             modifier = Modifier
-                    .background(color = Error)
+                .background(color = Error)
+                .fillMaxWidth()
                   )
         {
             Icon(

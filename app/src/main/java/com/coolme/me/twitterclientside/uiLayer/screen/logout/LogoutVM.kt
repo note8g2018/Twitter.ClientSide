@@ -33,6 +33,9 @@ class LogoutVM @Inject constructor(
     var user by mutableStateOf<User?>(null)
         private set
 
+    var progressing by mutableStateOf<Boolean>(false)
+        private set
+
     init
     {
         user = localDatabase.getUser()
@@ -43,6 +46,7 @@ class LogoutVM @Inject constructor(
 
     fun logout(scaffoldState : ScaffoldState, navController: NavController)
     {
+        progressing = true
         viewModelScope.launch {
             withContext(Dispatchers.IO){
                 repository.logout(user!!)
@@ -60,6 +64,7 @@ class LogoutVM @Inject constructor(
                                 }
                                 is ResultSho.Success     ->
                                 {
+                                    progressing = false
                                     println("Success")
                                     //navController.backQueue.clear()
                                     navController.navigate(Screen.Login.route){
@@ -68,6 +73,7 @@ class LogoutVM @Inject constructor(
                                 }
                                 is ResultSho.Failure     ->
                                 {
+                                    progressing = false
                                     println("Failure")
                                     snackBarController.getScope().launch {
                                         snackBarController.showSnackBar(

@@ -13,8 +13,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
-import com.coolme.me.twitterclientside.uiLayer.theme.InputText
-import com.coolme.me.twitterclientside.uiLayer.theme.LabelText
+import com.coolme.me.twitterclientside.uiLayer.theme.StyleInputText
+import com.coolme.me.twitterclientside.uiLayer.theme.StyleLabelText
 import com.coolme.me.twitterclientside.uiLayer.theme.outlinedTextFieldColors
 
 @Composable
@@ -34,13 +34,13 @@ fun TextFieldSho(
         isError = isError,
         modifier = Modifier.fillMaxWidth(),
         value = value,
-        textStyle = InputText,
+        textStyle = StyleInputText,
         singleLine = true,
         onValueChange = onValueChange,
         label = {
             Text(
                 text = label,
-                style = LabelText,
+                style = StyleLabelText,
                 )
         },
         colors = outlinedTextFieldColors(),

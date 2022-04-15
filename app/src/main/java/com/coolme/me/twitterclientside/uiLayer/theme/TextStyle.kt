@@ -4,7 +4,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.text.TextStyle
 
-val TopBar : TextStyle = TextStyle(
+val StyleTopBar : TextStyle = TextStyle(
     fontSize = ContentBar,
     color = TopBarContent,
     fontFamily = aclonicaFamily,
@@ -13,16 +13,16 @@ val TopBar : TextStyle = TextStyle(
         blurRadius= 10.0f,
         color= TextShadow,
                    ),
-                                              )
+                                       )
 
-val InputText : TextStyle = TextStyle(
+val StyleInputText : TextStyle = TextStyle(
     fontSize = InputTextField,
     color = InputTextFiled,
-                                     )
+                                          )
 
-val LabelText : TextStyle = TextStyle(
+val StyleLabelText : TextStyle = TextStyle(
     fontSize = InputTextField,
-                                     )
+                                          )
 
 val StyleGreenButton : TextStyle = TextStyle(
     fontSize = InputTextField,
@@ -42,6 +42,6 @@ val StyleRole : TextStyle = TextStyle(
 val StyleOutlinedButton : TextStyle = TextStyle(
     fontSize = OutlinedButton,
                                                )
-val SnackBarContentText: TextStyle = TextStyle(
+val StyleSnackBarContentText: TextStyle = TextStyle(
     fontSize = InputTextField,
-                               )
+                                                   )
