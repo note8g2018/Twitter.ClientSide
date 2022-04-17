@@ -7,14 +7,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.coolme.me.twitterclientside.dataLayer.model.Screen
 import com.coolme.me.twitterclientside.dataLayer.model.UserRealm
-import com.coolme.me.twitterclientside.dataLayer.userInterface.LocalDatabase
+import com.coolme.me.twitterclientside.dataLayer.userInterface.UserLDB
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class NavHostShoVM @Inject constructor(
-    private val localDatabase: LocalDatabase,
+    private val userLDB: UserLDB,
                                       ) : ViewModel()
 {
     var isLoading by mutableStateOf(true)
@@ -26,7 +26,7 @@ class NavHostShoVM @Inject constructor(
     init
     {
         viewModelScope.launch {
-            val userRealm : UserRealm? = localDatabase.getUserRealm()
+            val userRealm : UserRealm? = userLDB.getUserRealm()
             if(userRealm != null)
             {
                 if(userRealm.isLogin)

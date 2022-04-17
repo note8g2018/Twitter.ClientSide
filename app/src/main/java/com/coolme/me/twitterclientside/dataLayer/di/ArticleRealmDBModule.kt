@@ -1,6 +1,6 @@
 package com.coolme.me.twitterclientside.dataLayer.di
 
-import com.coolme.me.twitterclientside.dataLayer.model.UserRealm
+import com.coolme.me.twitterclientside.dataLayer.model.ArticleRealm
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -11,20 +11,20 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object UserRealmDBModule
+object ArticleRealmDBModule
 {
-    @UserRealmDB
+    @ArticleRealmDB
     @Singleton
     @Provides
-    fun provideUserRealmDB() : Realm
+    fun provideArticleRealmDB() : Realm
     {
         val config = RealmConfiguration
-                .Builder(schema = setOf(UserRealm::class))
-                .name("userRealmDB")
-                .compactOnLaunch()
-                .build()
-        //val userRealmDB = Realm.open(config)
+            .Builder(schema = setOf(ArticleRealm::class))
+            .name("articleRealmDB")
+            .compactOnLaunch()
+            .build()
+        //val articleRealmDB = Realm.open(config)
         return Realm.open(config)
-        //return userRealmDB
+        //return articleRealmDB
     }
 }

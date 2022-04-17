@@ -3,7 +3,7 @@ package com.coolme.me.twitterclientside.dataLayer.userInterface
 import com.coolme.me.twitterclientside.dataLayer.model.User
 import com.coolme.me.twitterclientside.dataLayer.model.UserRealm
 
-interface LocalDatabase
+interface UserLDB
 {
     fun saveOrUpdateUser(user: User)
 

@@ -10,11 +10,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.coolme.me.twitterclientside.dataLayer.model.ResultSho
 import com.coolme.me.twitterclientside.dataLayer.model.Screen
-import com.coolme.me.twitterclientside.dataLayer.userInterface.RegistrationRepository
-import com.coolme.me.twitterclientside.domainLayer.validation.isEmailValid
-import com.coolme.me.twitterclientside.domainLayer.validation.isPasswordValid
-import com.coolme.me.twitterclientside.domainLayer.validation.isUsernameValid
-import com.coolme.me.twitterclientside.uiLayer.screen.registration.RegistrationUiState
+import com.coolme.me.twitterclientside.dataLayer.model.User
+import com.coolme.me.twitterclientside.dataLayer.userInterface.ArticleRepository
+import com.coolme.me.twitterclientside.dataLayer.userInterface.UserLDB
 import com.coolme.me.twitterclientside.uiLayer.component.SnackBarController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -28,62 +26,69 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ArticleVM @Inject constructor(
-    private val repository: RegistrationRepository
+    private val repository: ArticleRepository,
+    userLDB: UserLDB,
                                 ) : ViewModel()
 {
-    var uiState by mutableStateOf(RegistrationUiState())
+    var uiState by mutableStateOf(ArticleUiState())
         private set
+
+    var user by mutableStateOf<User?>(null)
+        private set
+
+    init
+    {
+        user = userLDB.getUser()
+        uiState = uiState.copy(token = user?.token!!)
+        println("called init")
+    }
 
     private val snackBarController = SnackBarController(viewModelScope)
 
-    fun onUsernameChange(newUsername: String)
+    fun onTitleChange(newTitle: String)
     {
-        uiState = uiState.copy(username = newUsername)
+        uiState = uiState.copy(title = newTitle)
     }
-    fun validateUsername()
+    fun onBodyChange(newBody: String)
     {
-        uiState = uiState.copy(usernameHasError = !isUsernameValid(
-            username = uiState.username)
-                              )
+        uiState = uiState.copy(body = newBody)
     }
-    fun onPassword1Change(newPassword: String)
+    private fun validateTitle()
     {
-        uiState = uiState.copy(password1 = newPassword)
+        uiState = uiState.copy( titleHasError = uiState.title.trim().isEmpty() )
     }
-    fun onPassword2Change(newPassword: String)
+    private fun validateBody()
     {
-        uiState = uiState.copy(password2 = newPassword)
+        uiState = uiState.copy( bodyHasError = uiState.body.trim().isEmpty() )
     }
-    fun validatePassword()
+    private fun canSend(): Boolean
     {
-        uiState = uiState.copy(
-            passwordHasError = !isPasswordValid(password1 = uiState.password1,
-                                                password2 = uiState.password2)
-                              )
+        validateTitle()
+        validateBody()
+        if(uiState.titleHasError || uiState.bodyHasError)
+        {
+            return false
+        }
+        else
+        {
+            return true
+        }
     }
-    fun onEmailChange(newEmail: String)
-    {
-        uiState = uiState.copy(email = newEmail)
-    }
+
     private fun onProgressing(newProgressing: Boolean)
     {
         uiState = uiState.copy(progressing = newProgressing)
     }
-    fun validateEmail()
-    {
-        uiState = uiState.copy(emailHasError = !isEmailValid(email= uiState.email))
-    }
-
-    fun onBackFromPassword()
-    {
-        onProgressing(false)
-    }
 
     fun send(scaffoldState : ScaffoldState, navController: NavController)
     {
+        if(!canSend())
+        {
+            return
+        }
         viewModelScope.launch {
             withContext(Dispatchers.IO){
-                repository.submit(uiState)
+                repository.send(uiState)
                         .stateIn(
                             initialValue = ResultSho.Progressing,
                             scope = viewModelScope,
@@ -101,7 +106,15 @@ class ArticleVM @Inject constructor(
                                 {
                                     onProgressing(false)
                                     println("Success")
-                                    navController.backQueue.clear()
+                                    snackBarController.getScope().launch {
+                                        snackBarController.showSnackBar(
+                                            scaffoldState = scaffoldState,
+                                            message = it.data,
+                                            duration = SnackbarDuration.Indefinite,
+                                            actionLabel = "Hide",
+                                                                       )
+                                    }
+                                    //navController.backQueue.clear()
                                     navController.navigate(Screen.Wall.route)
                                 }
                                 is ResultSho.Failure     ->

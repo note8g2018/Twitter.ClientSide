@@ -1,15 +1,16 @@
 package com.coolme.me.twitterclientside.dataLayer.localDatabase
 
+import com.coolme.me.twitterclientside.dataLayer.di.UserRealmDB
 import com.coolme.me.twitterclientside.dataLayer.model.User
 import com.coolme.me.twitterclientside.dataLayer.model.UserRealm
-import com.coolme.me.twitterclientside.dataLayer.userInterface.LocalDatabase
+import com.coolme.me.twitterclientside.dataLayer.userInterface.UserLDB
 import io.realm.Realm
 import io.realm.query
 import javax.inject.Inject
 
-class LocalDatabaseImpl @Inject constructor(
-    private val userRealmDB: Realm,
-                                           ) : LocalDatabase
+class UserLDBImpl @Inject constructor(
+    @UserRealmDB private val userRealmDB: Realm,
+                                     ) : UserLDB
 {
     override fun saveOrUpdateUser(user: User)
     {

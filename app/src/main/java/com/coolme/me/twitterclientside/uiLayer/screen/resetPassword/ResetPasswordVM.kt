@@ -92,8 +92,12 @@ class ResetPasswordVM @Inject constructor(
                                             actionLabel = "Hide",
                                                                        )
                                     }
-                                    navController.backQueue.clear()
-                                    navController.navigate(Screen.Login.route)
+                                    //navController.backQueue.clear()
+                                    //navController.navigate(Screen.Login.route)
+                                    navController.navigate(Screen.Login.route){
+                                        popUpTo(Screen.ResetPassword.route){
+                                            inclusive = true }
+                                    }
                                 }
                                 is ResultSho.Failure     ->
                                 {

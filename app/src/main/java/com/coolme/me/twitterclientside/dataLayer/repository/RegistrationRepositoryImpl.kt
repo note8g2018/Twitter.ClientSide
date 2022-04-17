@@ -2,9 +2,9 @@ package com.coolme.me.twitterclientside.dataLayer.repository
 
 import com.coolme.me.twitterclientside.dataLayer.model.ResultSho
 import com.coolme.me.twitterclientside.dataLayer.model.User
-import com.coolme.me.twitterclientside.dataLayer.userInterface.LocalDatabase
 import com.coolme.me.twitterclientside.dataLayer.userInterface.RegistrationNetwork
 import com.coolme.me.twitterclientside.dataLayer.userInterface.RegistrationRepository
+import com.coolme.me.twitterclientside.dataLayer.userInterface.UserLDB
 import com.coolme.me.twitterclientside.uiLayer.screen.forgetPassword.ForgetPasswordUiState
 import com.coolme.me.twitterclientside.uiLayer.screen.registration.RegistrationUiState
 import com.coolme.me.twitterclientside.uiLayer.screen.resetPassword.ResetPasswordUiState
@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 class RegistrationRepositoryImpl @Inject constructor(
     private val registrationNetwork: RegistrationNetwork,
-    private val localDatabase: LocalDatabase,
+    private val userLDB: UserLDB,
                                                     ) : RegistrationRepository
 {
     override suspend fun submit(registrationUiState: RegistrationUiState)
@@ -40,7 +40,7 @@ class RegistrationRepositoryImpl @Inject constructor(
                     is ResultSho.Success     ->
                     {
                         val job: Job = CoroutineScope(Dispatchers.IO).launch {
-                            localDatabase.saveOrUpdateUser(value.data)
+                            userLDB.saveOrUpdateUser(value.data)
                         }
                         job.join()
                         emit(value)

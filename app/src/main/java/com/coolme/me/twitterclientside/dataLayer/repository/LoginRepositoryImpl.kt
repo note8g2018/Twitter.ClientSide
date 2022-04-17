@@ -2,9 +2,9 @@ package com.coolme.me.twitterclientside.dataLayer.repository
 
 import com.coolme.me.twitterclientside.dataLayer.model.ResultSho
 import com.coolme.me.twitterclientside.dataLayer.model.User
-import com.coolme.me.twitterclientside.dataLayer.userInterface.LocalDatabase
 import com.coolme.me.twitterclientside.dataLayer.userInterface.LoginNetwork
 import com.coolme.me.twitterclientside.dataLayer.userInterface.LoginRepository
+import com.coolme.me.twitterclientside.dataLayer.userInterface.UserLDB
 import com.coolme.me.twitterclientside.uiLayer.screen.login.LoginUiState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 class LoginRepositoryImpl @Inject constructor(
     private val loginNetwork: LoginNetwork,
-    private val localDatabase: LocalDatabase,
+    private val userLDB: UserLDB,
                                              ) : LoginRepository
 {
     override suspend fun login(loginUiState: LoginUiState): Flow<ResultSho<User>>
@@ -37,7 +37,7 @@ class LoginRepositoryImpl @Inject constructor(
                     is ResultSho.Success     ->
                     {
                         val job: Job = CoroutineScope(Dispatchers.IO).launch {
-                            localDatabase.saveOrUpdateUser(value.data)
+                            userLDB.saveOrUpdateUser(value.data)
                         }
                         job.join()
                         emit(value)
@@ -65,7 +65,7 @@ class LoginRepositoryImpl @Inject constructor(
                     is ResultSho.Success     ->
                     {
                         val job: Job = CoroutineScope(Dispatchers.IO).launch {
-                            localDatabase.deleteUser(user)
+                            userLDB.deleteUser(user)
                         }
                         job.join()
                         emit(value)

@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -29,6 +30,7 @@ fun NavHostSho(vM: NavHostShoVM = hiltViewModel())
 {
     val navController = rememberNavController()
     val focusRequester by remember { mutableStateOf(FocusRequester()) }
+    val localFocusManager = LocalFocusManager.current
 
     NavHost(
         navController = navController,
@@ -38,7 +40,10 @@ fun NavHostSho(vM: NavHostShoVM = hiltViewModel())
                 .focusable()
                 .pointerInput(Unit) {
                     detectTapGestures(
-                        onTap = { focusRequester.requestFocus() }
+                        onTap = {
+                            //focusRequester.requestFocus()
+                            localFocusManager.clearFocus()
+                        }
                                      )
                 }
                 .fillMaxSize()

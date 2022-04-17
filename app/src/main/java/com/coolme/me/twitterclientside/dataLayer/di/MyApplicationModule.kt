@@ -1,8 +1,11 @@
 package com.coolme.me.twitterclientside.dataLayer.di
 
-import com.coolme.me.twitterclientside.dataLayer.localDatabase.LocalDatabaseImpl
+import com.coolme.me.twitterclientside.dataLayer.localDatabase.ArticleLDBImpl
+import com.coolme.me.twitterclientside.dataLayer.localDatabase.UserLDBImpl
+import com.coolme.me.twitterclientside.dataLayer.network.ArticleNetworkImpl
 import com.coolme.me.twitterclientside.dataLayer.network.LoginNetworkImpl
 import com.coolme.me.twitterclientside.dataLayer.network.RegistrationNetworkImpl
+import com.coolme.me.twitterclientside.dataLayer.repository.ArticleRepositoryImpl
 import com.coolme.me.twitterclientside.dataLayer.repository.LoginRepositoryImpl
 import com.coolme.me.twitterclientside.dataLayer.repository.RegistrationRepositoryImpl
 import com.coolme.me.twitterclientside.dataLayer.userInterface.*
@@ -15,10 +18,7 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 abstract class MyApplicationModule
 {
-    @Binds
-    abstract fun bindLocalDatabase(
-        localDatabaseImpl: LocalDatabaseImpl
-                                           ): LocalDatabase
+    // Registration ************************************************
 
     @Binds
     abstract fun bindRegistrationRepository(
@@ -28,16 +28,40 @@ abstract class MyApplicationModule
     @Binds
     abstract fun bindRegistrationNetwork(
         registrationNetworkImpl: RegistrationNetworkImpl
-                                           ): RegistrationNetwork
+                                        ): RegistrationNetwork
+
+    @Binds
+    abstract fun bindUserLDB(
+        userLDBImpl: UserLDBImpl
+                            ): UserLDB
+
+    // Login ************************************************************
 
     @Binds
     abstract fun bindLoginRepository(
         loginRepositoryImpl: LoginRepositoryImpl
-                                           ): LoginRepository
+                                    ): LoginRepository
 
     @Binds
     abstract fun bindLoginNetwork(
         loginNetworkImpl: LoginNetworkImpl
                                         ): LoginNetwork
+
+    // Article ************************************************************
+
+    @Binds
+    abstract fun bindArticleRepository(
+        articleRepositoryImpl: ArticleRepositoryImpl
+                                           ): ArticleRepository
+
+    @Binds
+    abstract fun bindArticleNetwork(
+        articleNetworkImpl: ArticleNetworkImpl
+                                        ): ArticleNetwork
+
+    @Binds
+    abstract fun bindArticleLDB(
+        articleLDBImpl: ArticleLDBImpl
+                            ): ArticleLDB
 
 }

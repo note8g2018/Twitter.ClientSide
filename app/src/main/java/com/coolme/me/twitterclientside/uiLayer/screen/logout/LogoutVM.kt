@@ -11,8 +11,8 @@ import androidx.navigation.NavController
 import com.coolme.me.twitterclientside.dataLayer.model.ResultSho
 import com.coolme.me.twitterclientside.dataLayer.model.Screen
 import com.coolme.me.twitterclientside.dataLayer.model.User
-import com.coolme.me.twitterclientside.dataLayer.userInterface.LocalDatabase
 import com.coolme.me.twitterclientside.dataLayer.userInterface.LoginRepository
+import com.coolme.me.twitterclientside.dataLayer.userInterface.UserLDB
 import com.coolme.me.twitterclientside.uiLayer.component.SnackBarController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -27,7 +27,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LogoutVM @Inject constructor(
     private val repository: LoginRepository,
-    localDatabase: LocalDatabase,
+    userLDB: UserLDB,
                                  ) : ViewModel()
 {
     var user by mutableStateOf<User?>(null)
@@ -38,7 +38,7 @@ class LogoutVM @Inject constructor(
 
     init
     {
-        user = localDatabase.getUser()
+        user = userLDB.getUser()
         println("called init")
     }
 
