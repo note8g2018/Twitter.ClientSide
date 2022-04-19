@@ -15,3 +15,4 @@ val CircleProgressSize : Dp = 150.dp
 val ContentBar : TextUnit = 30.sp
 val InputTextField : TextUnit = 25.sp
 val OutlinedButton : TextUnit = 15.sp
+val TextShoFontSize : TextUnit = 35.sp

@@ -2,6 +2,7 @@ package com.coolme.me.twitterclientside.dataLayer.repository
 
 import com.coolme.me.twitterclientside.dataLayer.model.ResultSho
 import com.coolme.me.twitterclientside.dataLayer.model.User
+import com.coolme.me.twitterclientside.dataLayer.model.UserRealm
 import com.coolme.me.twitterclientside.dataLayer.userInterface.LoginNetwork
 import com.coolme.me.twitterclientside.dataLayer.userInterface.LoginRepository
 import com.coolme.me.twitterclientside.dataLayer.userInterface.UserLDB
@@ -66,6 +67,34 @@ class LoginRepositoryImpl @Inject constructor(
                     {
                         val job: Job = CoroutineScope(Dispatchers.IO).launch {
                             userLDB.deleteUser(user)
+                        }
+                        job.join()
+                        emit(value)
+                    }
+                }
+            }
+        }
+    }
+
+    override suspend fun getUserPhoneFromServer(token: String): Flow<ResultSho<UserRealm>>
+    {
+        val result = loginNetwork.getUserPhoneFromServer(token)
+        return flow {
+            result.collect{value ->
+                when (value)
+                {
+                    is ResultSho.Failure     ->
+                    {
+                        emit(value)
+                    }
+                    is ResultSho.Progressing ->
+                    {
+                        emit(value)
+                    }
+                    is ResultSho.Success     ->
+                    {
+                        val job: Job = CoroutineScope(Dispatchers.IO).launch {
+                            userLDB.saveOrUpdateUser(value.data)
                         }
                         job.join()
                         emit(value)

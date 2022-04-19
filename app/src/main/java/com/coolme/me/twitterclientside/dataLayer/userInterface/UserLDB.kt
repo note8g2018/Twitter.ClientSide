@@ -7,6 +7,8 @@ interface UserLDB
 {
     fun saveOrUpdateUser(user: User)
 
+    fun saveOrUpdateUser(userPhone: UserRealm)
+
     fun getUserRealm(username: String): UserRealm?
 
     fun getUserRealm(): UserRealm?

@@ -40,6 +40,34 @@ class UserLDBImpl @Inject constructor(
         }
     }
 
+    override fun saveOrUpdateUser(userPhone: UserRealm)
+    {
+        println(userRealmDB.configuration.path)
+        userRealmDB.writeBlocking  {
+            val userRealm: UserRealm? = this
+                .query<UserRealm>("username == $0", userPhone.username)
+                .first().find()
+            if(userRealm != null)
+            {
+                userRealm.token = userPhone.token!!
+                userRealm._id = userPhone._id
+                //userRealm.username = user.username
+                userRealm.email = userPhone.email
+                userRealm.idNumber = userPhone.idNumber
+                userRealm.ip = userPhone.ip
+                userRealm.disabled = userPhone.disabled!!
+                userRealm.isLogin = userPhone.isLogin
+                userRealm.lastTimeLoginUTC = userPhone.lastTimeLoginUTC.toString()
+                userRealm.createdAt = userPhone.createdAt.toString()
+                userRealm.updatedAt = userPhone.updatedAt.toString()
+            }
+            else
+            {
+                this.copyToRealm(userPhone)
+            }
+        }
+    }
+
     override fun getUserRealm(username: String): UserRealm?
     {
         return userRealmDB

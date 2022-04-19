@@ -15,3 +15,9 @@ val UnfocusedBorderColor : Color =
 val GreenButton : Color = Color(red = 76, green = 175, blue = 80, alpha = 255)
 val OnGreenButton : Color = Color.White
 val Error : Color = Color.Red
+val TextShoColor : Color = Color(
+    red = 64,
+    green = 153,
+    blue = 175,
+    alpha = 255
+                                )
