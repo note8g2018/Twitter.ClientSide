@@ -21,6 +21,7 @@ import com.coolme.me.twitterclientside.uiLayer.screen.article.Article
 import com.coolme.me.twitterclientside.uiLayer.screen.forgetPassword.ForgetPassword
 import com.coolme.me.twitterclientside.uiLayer.screen.home.Home
 import com.coolme.me.twitterclientside.uiLayer.screen.login.Login
+import com.coolme.me.twitterclientside.uiLayer.screen.profile.Profile
 import com.coolme.me.twitterclientside.uiLayer.screen.registration.Registration
 import com.coolme.me.twitterclientside.uiLayer.screen.resetPassword.ResetPassword
 import com.coolme.me.twitterclientside.uiLayer.screen.wall.Wall
@@ -56,5 +57,6 @@ fun NavHostSho(vM: NavHostShoVM = hiltViewModel())
         composable(route= Screen.ResetPassword.route) { ResetPassword(navController = navController) }
         composable(route= Screen.Home.route) { Home(navController = navController) }
         composable(route= Screen.Article.route) { Article(navController = navController) }
+        composable(route= Screen.Profile.route) { Profile(navController = navController) }
     }
 }

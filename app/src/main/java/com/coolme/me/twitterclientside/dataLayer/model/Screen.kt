@@ -9,4 +9,5 @@ sealed class Screen(val route: String)
     object ResetPassword : Screen(route = "resetPassword")
     object Home : Screen(route = "home")
     object Article : Screen(route = "article")
+    object Profile : Screen(route = "profile")
 }

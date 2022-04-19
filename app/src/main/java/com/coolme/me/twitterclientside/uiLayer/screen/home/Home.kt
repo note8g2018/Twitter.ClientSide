@@ -70,6 +70,10 @@ fun Home(
                     onClick = { navController.navigate(Screen.Article.route) },
                     text = "Article"
                          )
+                ButtonSho(
+                    onClick = { navController.navigate(Screen.Profile.route) },
+                    text = "Profile"
+                         )
             }
 
             if(vMLogout.progressing)
