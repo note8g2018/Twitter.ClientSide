@@ -10,4 +10,6 @@ sealed class Screen(val route: String)
     object Home : Screen(route = "home")
     object Article : Screen(route = "article")
     object Profile : Screen(route = "profile")
+    object ProfileEdit : Screen(route = "profileEdit")
+    object MainContent : Screen(route = "mainContent")
 }

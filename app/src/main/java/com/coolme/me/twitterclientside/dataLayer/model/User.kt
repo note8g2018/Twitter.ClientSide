@@ -5,29 +5,31 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class User(
-    var token: String? = null,
-    var _id : String,
-    var username:String,
-    var email: String,
-    var idNumber: Int,
-    var ip: String,
-    var disabled: Boolean? = false,
-    var isLogin: Boolean,
-    var lastTimeLoginUTC : Instant,
-    var createdAt : Instant,
-    var updatedAt: Instant,
+    var token: String = "",
+    var _id : String = "",
+    var username:String = "",
+    var nickname:String = "",
+    var email: String = "",
+    var idNumber: Int = 0,
+    var ip: String = "",
+    var disabled: Boolean = false,
+    var isLogin: Boolean = false,
+    var lastTimeLoginUTC : Instant = Instant.DISTANT_FUTURE,
+    var createdAt : Instant = Instant.DISTANT_FUTURE,
+    var updatedAt: Instant = Instant.DISTANT_FUTURE,
                )
 {
     fun toUserRealm(): UserRealm
     {
         val temp = UserRealm()
-        temp.token = token!!
+        temp.token = token
         temp._id = _id
         temp.username = username
+        temp.nickname = nickname
         temp.email = email
         temp.idNumber = idNumber
         temp.ip = ip
-        temp.disabled = disabled!!
+        temp.disabled = disabled
         temp.isLogin = isLogin
         temp.lastTimeLoginUTC = lastTimeLoginUTC.toString()
         temp.createdAt = createdAt.toString()

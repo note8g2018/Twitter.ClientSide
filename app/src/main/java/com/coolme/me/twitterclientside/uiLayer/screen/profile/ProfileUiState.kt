@@ -7,6 +7,7 @@ data class ProfileUiState(
     val token: String = "",
     val title : String = "",
     val body : String = "",
+    val editMode: Boolean = false,
     val titleHasError : Boolean = false,
     val bodyHasError : Boolean = false,
     val progressing : Boolean = false,

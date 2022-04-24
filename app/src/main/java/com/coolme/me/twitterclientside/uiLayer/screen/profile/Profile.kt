@@ -14,10 +14,10 @@ import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.coolme.me.twitterclientside.uiLayer.component.ButtonSho
+import com.coolme.me.twitterclientside.uiLayer.component.EditableTextSho
 import com.coolme.me.twitterclientside.uiLayer.component.SnackbarHostSho
 import com.coolme.me.twitterclientside.uiLayer.theme.PaddingColumn
 import com.coolme.me.twitterclientside.uiLayer.theme.SpaceColumnHeight
-import com.coolme.me.twitterclientside.uiLayer.theme.StyleTextSho
 import com.coolme.me.twitterclientside.uiLayer.theme.StyleTextSho2
 import com.coolme.me.twitterclientside.uiLayer.widget.CircleProgressIndicator
 
@@ -85,15 +85,66 @@ fun Profile(
             {
                 Row()
                 {
+                    //var focus by remember { mutableStateOf(false) }
                     Text(
                         text = "Username:   ",
                         style = StyleTextSho2,
                         )
-                    Text(
-                        text = vM.userPhone?.username!!,
-                        style = StyleTextSho,
-                        )
+                    EditableTextSho(
+                        text = vM.userPhone?.nickname!!,
+                        editMode = vM.uiState.editMode,
+                                   )
+//                    if (!vM.uiState.editMode)
+//                    {
+//                        Text(
+//                            modifier = Modifier.clickable {
+//                                vM.onEditModeChange(true)
+//                            },
+//                            text = vM.userPhone?.nickname!!,
+//                            style = StyleTextSho,
+//                            )
+//                    }
+//                    else
+//                    {
+//                        TextFieldSho(
+//                            modifier = Modifier.onFocusChanged {
+//                                if (focus != it.isFocused) {
+//                                    focus = it.isFocused
+//                                    if (!it.isFocused) {
+//                                        vM.onEditModeChange(false)
+//                                    }
+//                                }
+//                            }
+//
+//                            ,
+//                            value = vM.userPhone?.nickname!!,
+//                            onValueChange = {vM.onNicknameChange(it)},
+//                            label = "nickname",
+//                                    )
+//                    }
                 }
+
+//                Row()
+//                {
+//                    var focus by remember { mutableStateOf(true) }
+//                    Text(
+//                        text = "Username:   ",
+//                        style = StyleTextSho2,
+//                        )
+//                    TextFieldSho(
+//                        modifier = Modifier
+//                            .onFocusChanged {
+//                                println(it.isFocused)
+//                            focus = !it.isFocused
+//                        }
+//                        ,
+//                        readOnly = focus,
+//                        value = vM.userPhone?.nickname!!,
+//                        onValueChange = {vM.onNicknameChange(it)},
+//                        label = "nickname",
+//                                )
+//
+//                }
 
 
                 ButtonSho(

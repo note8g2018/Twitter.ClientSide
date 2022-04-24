@@ -9,7 +9,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.coolme.me.twitterclientside.dataLayer.model.ResultSho
 import com.coolme.me.twitterclientside.dataLayer.model.User
-import com.coolme.me.twitterclientside.dataLayer.model.UserRealm
 import com.coolme.me.twitterclientside.dataLayer.userInterface.LoginRepository
 import com.coolme.me.twitterclientside.dataLayer.userInterface.UserLDB
 import com.coolme.me.twitterclientside.uiLayer.component.SnackBarController
@@ -32,22 +31,33 @@ class ProfileVM @Inject constructor(
     var uiState by mutableStateOf(ProfileUiState())
         private set
 
-    var userPhone by mutableStateOf<UserRealm?>(null)
+    var userPhone by mutableStateOf<User>(User())
         private set
 
-    var userVisited by mutableStateOf<User?>(null)
+    var userVisitor by mutableStateOf<User>(User())
         private set
 
     init
     {
-        userPhone = userLDB.getUserRealm()
-        uiState = uiState.copy(token = userPhone?.token!!)
-        getUserPhoneFromServer(userPhone?.token!!)
+        userPhone = userLDB.getUser()!!
+        uiState = uiState.copy(token = userPhone.token)
+        getUserPhoneFromServer(userPhone.token)
         println("called init")
     }
 
     private val snackBarController = SnackBarController(viewModelScope)
 
+    fun onEditModeChange(newEditMode: Boolean)
+    {
+        uiState = uiState.copy(editMode = newEditMode)
+    }
+    fun onNicknameChange(newNickname: String)
+    {
+        userPhone = userPhone.copy(nickname = newNickname)
+        //userPhone = UserRealm().apply { nickname = newNickname }
+        //userPhone?.nickname = newNickname
+        //uiState = uiState.copy(editMode = newEditMode)
+    }
     fun onTitleChange(newTitle: String)
     {
         uiState = uiState.copy(title = newTitle)
@@ -105,7 +115,7 @@ class ProfileVM @Inject constructor(
                             {
                                 onProgressing(false)
                                 println("Success")
-                                userPhone = it.data
+                                userPhone = it.data.toUser()
                             }
                             is ResultSho.Failure     ->
                             {

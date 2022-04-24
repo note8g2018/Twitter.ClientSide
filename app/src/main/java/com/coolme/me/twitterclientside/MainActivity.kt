@@ -23,6 +23,7 @@ class MainActivity : ComponentActivity()
         setContent {
             TwitterClientSideTheme(darkTheme = true)
             {
+                //FeatureThatRequiresCameraPermission()
                 NavHostSho()
             }
         }

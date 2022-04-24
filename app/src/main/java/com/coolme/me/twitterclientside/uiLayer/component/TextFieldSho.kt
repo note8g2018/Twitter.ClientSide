@@ -7,14 +7,10 @@ import androidx.compose.material.Icon
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
@@ -24,6 +20,67 @@ import androidx.compose.ui.text.input.VisualTransformation
 import com.coolme.me.twitterclientside.uiLayer.theme.StyleInputText
 import com.coolme.me.twitterclientside.uiLayer.theme.StyleLabelText
 import com.coolme.me.twitterclientside.uiLayer.theme.outlinedTextFieldColors
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+fun TextFieldSho(
+    modifier: Modifier = Modifier,
+    singleLine: Boolean = true,
+    maxLines: Int = Int.MAX_VALUE,
+    isError: Boolean = false,
+    readOnly: Boolean = false,
+    value: String,
+    onValueChange: (String) -> Unit,
+    label: String,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    keyboardType: KeyboardType = KeyboardType.Text,
+    imeAction: ImeAction = ImeAction.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
+                )
+{
+    //val focusRequester by remember { mutableStateOf(FocusRequester()) }
+    val keyboardController = LocalSoftwareKeyboardController.current
+
+    OutlinedTextField(
+        modifier = modifier
+            .fillMaxWidth()
+            //.focusRequester(focusRequester)
+            .onFocusChanged {
+                if (!it.isFocused)
+                {
+                    keyboardController?.hide()
+                }
+            }
+            .onFocusEvent {
+                if (!it.isFocused)
+                {
+                    keyboardController?.hide()
+                }
+            },
+        isError = isError,
+        readOnly = readOnly,
+        value = value,
+        textStyle = StyleInputText,
+        singleLine = singleLine,
+        maxLines = maxLines,
+        onValueChange = onValueChange,
+        label = {
+            Text(
+                text = label,
+                style = StyleLabelText,
+                )
+        },
+        colors = outlinedTextFieldColors(),
+        visualTransformation = visualTransformation,
+        keyboardOptions = KeyboardOptions(
+            capitalization = KeyboardCapitalization.None,
+            autoCorrect = false,
+            keyboardType = keyboardType,
+            imeAction = imeAction,
+                                         ),
+        keyboardActions = keyboardActions,
+                     )
+}
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -42,15 +99,22 @@ fun TextFieldSho(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
                 )
 {
-    val focusRequester by remember { mutableStateOf(FocusRequester()) }
+    //val focusRequester by remember { mutableStateOf(FocusRequester()) }
     val keyboardController = LocalSoftwareKeyboardController.current
 
     OutlinedTextField(
         modifier = modifier
             .fillMaxWidth()
-            .focusRequester(focusRequester)
+            //.focusRequester(focusRequester)
             .onFocusChanged {
-                if (!it.isFocused) {
+                if (!it.isFocused)
+                {
+                    keyboardController?.hide()
+                }
+            }
+            .onFocusEvent {
+                if (!it.isFocused)
+                {
                     keyboardController?.hide()
                 }
             },

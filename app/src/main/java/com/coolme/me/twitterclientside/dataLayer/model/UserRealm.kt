@@ -12,6 +12,7 @@ class UserRealm : RealmObject
     var _id : String = ""
     @PrimaryKey
     var username:String = ""
+    var nickname : String = ""
     var email: String = ""
     var idNumber: Int = 0
     var ip: String = ""
@@ -27,6 +28,7 @@ class UserRealm : RealmObject
             token= token,
             _id= _id,
             username= username,
+            nickname= nickname,
             email=email,
             idNumber=idNumber,
             ip= ip,
