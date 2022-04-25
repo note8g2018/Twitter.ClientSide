@@ -43,6 +43,6 @@ fun MainContent(modifier: Modifier = Modifier)
         }
               )
     {
-        Text("It worked!")
+        CameraPreview(modifier)
     }
 }

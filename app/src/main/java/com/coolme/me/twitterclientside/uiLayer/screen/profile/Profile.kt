@@ -11,6 +11,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.SoftwareKeyboardController
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.coolme.me.twitterclientside.uiLayer.component.ButtonSho
@@ -20,6 +21,13 @@ import com.coolme.me.twitterclientside.uiLayer.theme.PaddingColumn
 import com.coolme.me.twitterclientside.uiLayer.theme.SpaceColumnHeight
 import com.coolme.me.twitterclientside.uiLayer.theme.StyleTextSho2
 import com.coolme.me.twitterclientside.uiLayer.widget.CircleProgressIndicator
+
+//@Preview(showBackground = true)
+//@Composable
+//fun Test()
+//{
+//    Text(text = "Hello")
+//}
 
 //@Preview()
 //@OptIn(ExperimentalComposeUiApi::class)
